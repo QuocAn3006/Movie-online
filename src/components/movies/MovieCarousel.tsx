@@ -74,7 +74,7 @@ const MovieCarousel = ({ movies }: MovieCarouselProps) => {
                     src={`${baseCdnImage}${newImages[index] || item.thumb_url}`}
                     alt={item.origin_name}
                     className='hidden aspect-[2/3] w-full max-w-[320px] rounded-lg border-[14px] border-primary md:block'
-                    width={320}
+                    width={220}
                     height={480}
                   />
                   <div>hello</div>
