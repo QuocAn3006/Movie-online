@@ -77,6 +77,7 @@ const MovieCarousel = ({ movies }: MovieCarouselProps) => {
                     width={320}
                     height={480}
                   />
+                  <div>hello</div>
                 </div>
               </div>
             </div>
