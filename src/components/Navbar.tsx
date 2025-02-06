@@ -3,7 +3,7 @@
 import { movieTypes } from '@/constants';
 import { Category } from '@/types';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 interface NavbarProps {
   genresData: { items: Category[] };
@@ -211,6 +211,8 @@ const MobileMenu = ({ genres, countries }: { genres: Category[]; countries: Cate
 
 const Navbar = ({ genresData, countriesData }: NavbarProps) => {
   const [displayBgColor, setDisplayBgColor] = useState<boolean>(false);
+  const [openSearch, setOpenSearch] = useState<boolean>(false);
+  const inputRef = useRef<HTMLInputElement | null>(null);
   useEffect(() => {
     function checkPositionHandler() {
       if (window.scrollY == 0) setDisplayBgColor(false);
@@ -219,6 +221,23 @@ const Navbar = ({ genresData, countriesData }: NavbarProps) => {
     checkPositionHandler();
     window.addEventListener('scroll', checkPositionHandler);
     return () => window.removeEventListener('scroll', checkPositionHandler);
+  }, []);
+
+  useEffect(() => {
+    if (openSearch && inputRef.current) {
+      inputRef.current?.focus();
+    }
+  }, [openSearch]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (inputRef.current && !inputRef.current.contains(event.target as Node)) {
+        setOpenSearch(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   return (
@@ -283,24 +302,39 @@ const Navbar = ({ genresData, countriesData }: NavbarProps) => {
           </Link>
         </div>
         <div className='flex items-center gap-5'>
-          <abbr title='Tìm kiếm' className='hover:text-primary cursor-pointer'>
-            <svg
-              className='w-6 h-6 '
-              aria-hidden='true'
-              xmlns='http://www.w3.org/2000/svg'
-              width='24'
-              height='24'
-              fill='none'
-              viewBox='0 0 24 24'
+          <div className='relative flex items-center'>
+            <abbr title='Tìm kiếm' className='hover:text-primary cursor-pointer' onClick={() => setOpenSearch(true)}>
+              <svg
+                className='w-6 h-6 '
+                aria-hidden='true'
+                xmlns='http://www.w3.org/2000/svg'
+                width='24'
+                height='24'
+                fill='none'
+                viewBox='0 0 24 24'
+              >
+                <path
+                  stroke='currentColor'
+                  strokeLinecap='round'
+                  strokeWidth='2'
+                  d='m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z'
+                />
+              </svg>
+            </abbr>
+            <div
+              className={`absolute right-0 transition-all duration-300 ease-in-out ${
+                openSearch ? 'w-64 opacity-100' : 'w-0 opacity-0'
+              }`}
             >
-              <path
-                stroke='currentColor'
-                strokeLinecap='round'
-                strokeWidth='2'
-                d='m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z'
+              <input
+                onBlur={() => setOpenSearch(false)}
+                ref={inputRef}
+                type='text'
+                placeholder='Phim, diễn viên, thể loại...'
+                className='bg-black text-white placeholder-gray-400 border border-gray-600 rounded-full px-4 py-2 focus-outline-none focus:border-primary w-full'
               />
-            </svg>
-          </abbr>
+            </div>
+          </div>
           <Link href='/favourite' className='hover:text-primary'>
             <abbr title='Yêu thích'>
               <svg
