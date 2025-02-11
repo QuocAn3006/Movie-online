@@ -1,3 +1,4 @@
 import { useFetch } from './useFetch';
+import  useDebounce  from './useDebounce';
 
-export { useFetch };
+export { useFetch, useDebounce };
