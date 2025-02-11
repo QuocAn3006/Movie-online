@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 'use client';
 import { movieTypes } from '@/constants';
-import { useDebounce, useFetch } from '@/hooks';
 import { Category } from '@/types';
 import Link from 'next/link';
 import React, { useEffect, useRef, useState } from 'react';
@@ -214,9 +213,6 @@ const Navbar = ({ genresData, countriesData }: NavbarProps) => {
   const [displayBgColor, setDisplayBgColor] = useState<boolean>(false);
   const [openSearch, setOpenSearch] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const [searchValue, setSearchValue] = useState<string>('');
-  const debounceSearch = useDebounce(searchValue, 1000)
-  const [searchResult, setSearchResult] = useState();
   useEffect(() => {
     function checkPositionHandler() {
       if (window.scrollY == 0) setDisplayBgColor(false);
@@ -243,23 +239,6 @@ const Navbar = ({ genresData, countriesData }: NavbarProps) => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
-
-  const handleSearch = async (value: string) => {
-    try {
-      if(value.length < 3) return; 
-      const data = await useFetch(`/tim-kiem?q=${value}`)
-      setSearchResult(data?.data);
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
-  useEffect(() => {
-    if(debounceSearch) {
-      handleSearch(debounceSearch);
-    }
-  }, [debounceSearch])
-
 
   return (
     <header
@@ -350,15 +329,13 @@ const Navbar = ({ genresData, countriesData }: NavbarProps) => {
               <input
                 onBlur={() => setOpenSearch(false)}
                 ref={inputRef}
-                value={searchValue}
-                onChange={e => setSearchValue(e.target.value)}
                 type='text'
                 placeholder='Phim, diễn viên, thể loại...'
                 className='bg-black text-white placeholder-gray-400 border border-gray-600 rounded-full px-4 py-2 focus-outline-none focus:border-primary w-full'
               />
             </div>
           </div>
-          <Link href='/favourite' className='hover:text-primary p-2'>
+          <Link href='/favourite' className='hover:text-primary'>
             <abbr title='Yêu thích'>
               <svg
                 className='w-6 h-6 '
