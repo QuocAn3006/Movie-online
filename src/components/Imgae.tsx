@@ -12,22 +12,18 @@ type ImageProps = {
 
 export const ImageContainer: FC<ImageProps> = (props) => {
   const { src, alt = '', className = '', height = 450, width = 300 } = props;
-
-  const [isComplete, setIsComplete] = useState(false);
-
+  const [loading, setLoading] = useState(true);
   return (
-    <div className={`bg-stone-900 overflow-hidden ${isComplete ? 'animate-none' : 'animate-pulse'} ${className}`}>
+    <div className={`bg-stone-900 overflow-hidden ${className}`}>
       <Image
-        className={`duration-300 object-cover h-full w-full ${
-          isComplete ? 'opacity-100 blur-none' : 'opacity-0 blur-lg'
-        } `}
+        className={`duration-300 object-cover h-full w-full ${loading ? 'opacity-0 animate-pulse' : 'opacity-100'}`}
         src={src}
         alt={alt}
         width={width}
         height={height}
-        onLoad={() => setIsComplete(true)}
         loading='lazy'
         draggable={false}
+        onLoad={() => setLoading(false)}
       />
     </div>
   );

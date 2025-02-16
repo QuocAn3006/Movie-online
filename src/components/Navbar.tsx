@@ -2,9 +2,12 @@
 'use client';
 import { movieTypes } from '@/constants';
 import { useDebounce, useFetch } from '@/hooks';
-import { Category } from '@/types';
+import { Category, Movie, Movies } from '@/types';
+import axios from 'axios';
+import { Spinner } from 'flowbite-react';
 import Link from 'next/link';
 import React, { useEffect, useRef, useState } from 'react';
+import ModalCommon from './ModalCommon';
 
 interface NavbarProps {
   genresData: { items: Category[] };
@@ -213,10 +216,7 @@ const MobileMenu = ({ genres, countries }: { genres: Category[]; countries: Cate
 const Navbar = ({ genresData, countriesData }: NavbarProps) => {
   const [displayBgColor, setDisplayBgColor] = useState<boolean>(false);
   const [openSearch, setOpenSearch] = useState<boolean>(false);
-  const inputRef = useRef<HTMLInputElement | null>(null);
-  const [searchValue, setSearchValue] = useState<string>('');
-  const debounceSearch = useDebounce(searchValue, 1000)
-  const [searchResult, setSearchResult] = useState();
+  const [loading, setLoading] = useState<boolean>(false);
   useEffect(() => {
     function checkPositionHandler() {
       if (window.scrollY == 0) setDisplayBgColor(false);
@@ -226,40 +226,6 @@ const Navbar = ({ genresData, countriesData }: NavbarProps) => {
     window.addEventListener('scroll', checkPositionHandler);
     return () => window.removeEventListener('scroll', checkPositionHandler);
   }, []);
-
-  useEffect(() => {
-    if (openSearch && inputRef.current) {
-      inputRef.current?.focus();
-    }
-  }, [openSearch]);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (inputRef.current && !inputRef.current.contains(event.target as Node)) {
-        setOpenSearch(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
-
-  const handleSearch = async (value: string) => {
-    try {
-      if(value.length < 3) return; 
-      const data = await useFetch(`/tim-kiem?q=${value}`)
-      setSearchResult(data?.data);
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
-  useEffect(() => {
-    if(debounceSearch) {
-      handleSearch(debounceSearch);
-    }
-  }, [debounceSearch])
-
 
   return (
     <header
@@ -324,7 +290,11 @@ const Navbar = ({ genresData, countriesData }: NavbarProps) => {
         </div>
         <div className='flex items-center gap-5'>
           <div className='relative flex items-center'>
-            <abbr title='Tìm kiếm' className='hover:text-primary cursor-pointer' onClick={() => setOpenSearch(true)}>
+            <abbr
+              title='Tìm kiếm'
+              className={`hover:text-primary cursor-pointer ${openSearch ? 'hidden' : ''}`}
+              onClick={() => setOpenSearch(true)}
+            >
               <svg
                 className='w-6 h-6 '
                 aria-hidden='true'
@@ -342,21 +312,6 @@ const Navbar = ({ genresData, countriesData }: NavbarProps) => {
                 />
               </svg>
             </abbr>
-            <div
-              className={`absolute right-0 transition-all duration-300 ease-in-out ${
-                openSearch ? 'w-64 opacity-100' : 'w-0 opacity-0'
-              }`}
-            >
-              <input
-                onBlur={() => setOpenSearch(false)}
-                ref={inputRef}
-                value={searchValue}
-                onChange={e => setSearchValue(e.target.value)}
-                type='text'
-                placeholder='Phim, diễn viên, thể loại...'
-                className='bg-black text-white placeholder-gray-400 border border-gray-600 rounded-full px-4 py-2 focus-outline-none focus:border-primary w-full'
-              />
-            </div>
           </div>
           <Link href='/favourite' className='hover:text-primary p-2'>
             <abbr title='Yêu thích'>
@@ -374,6 +329,7 @@ const Navbar = ({ genresData, countriesData }: NavbarProps) => {
             </abbr>
           </Link>
           <MobileMenu genres={genresData?.items || []} countries={countriesData?.items || []} />
+          <ModalCommon isOpen={openSearch} onClose={() => setOpenSearch(false)} />
         </div>
       </nav>
     </header>
