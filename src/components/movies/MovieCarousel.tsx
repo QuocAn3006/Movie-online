@@ -6,7 +6,7 @@ import { Card } from 'flowbite-react';
 import React from 'react';
 import { Autoplay, EffectFade } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { ImageContainer } from '../Imgae';
+import { ImageContainer } from '../Image';
 import Link from 'next/link';
 
 type MovieCarouselProps = {

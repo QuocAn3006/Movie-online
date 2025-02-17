@@ -5,7 +5,7 @@ import { Movie, Movies } from '@/types';
 import { Modal, Spinner } from 'flowbite-react';
 import Image from 'next/image';
 import React, { FC, useEffect, useState } from 'react';
-import { ImageContainer } from './Imgae';
+import { ImageContainer } from './Image';
 import { baseCdnImage } from '@/constants';
 
 type ModalProps = {
