@@ -4,6 +4,7 @@ import { CustomFlowbiteTheme } from 'flowbite-react';
 export const baseUrl = process.env.NEXT_PUBLIC_API as string;
 export const baseCdnImage = process.env.NEXT_PUBLIC_DOMAIN_CDN_IMAGE as string;
 export const baseCdnBackupImage = process.env.NEXT_PUBLIC_DOMAIN_BACKUP_CDN_IMAGE as string;
+export const baseUrlProxy = process.env.NEXT_PUBLIC_PROXY_RESIZE_IMAGE as string;
 
 export const movieTypes: MovieType[] = [
   { title: 'Phim mới', path: 'phim-moi' },

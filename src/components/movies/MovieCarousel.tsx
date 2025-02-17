@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-no-undef */
 'use client';
-import { baseCdnImage } from '@/constants';
+import { baseCdnImage, baseUrlProxy } from '@/constants';
 import { Movie, Movies } from '@/types';
 import { Card } from 'flowbite-react';
 import React from 'react';
@@ -28,7 +28,7 @@ const MovieCarousel = ({ movies }: MovieCarouselProps) => {
         <SwiperSlide key={item._id}>
           <div
             className='bg-cover min-h-screen w-full relative bg-center max-h-[800px] lg:min-h-0 lg:aspect-video bg-black'
-            style={{ backgroundImage: `url(${baseCdnImage}${newImages[index] || item?.poster_url})` }}
+            style={{ backgroundImage: `url(${baseUrlProxy}${baseCdnImage}${newImages[index] || item?.poster_url})` }}
           >
             <div className='absolute inset-0 bg-black/80 md:bg-black/90 flex items-center'>
               <div className='w-full max-w-7xl px-4 mx-auto flex items-center justify-between gap-8'>

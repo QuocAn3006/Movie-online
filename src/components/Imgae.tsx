@@ -2,6 +2,7 @@
 'use client';
 import { FC, useState } from 'react';
 import Image from 'next/image';
+import { baseUrlProxy } from '@/constants';
 type ImageProps = {
   src: string;
   alt?: string;
@@ -17,7 +18,7 @@ export const ImageContainer: FC<ImageProps> = (props) => {
     <div className={`bg-stone-900 overflow-hidden ${className}`}>
       <Image
         className={`duration-300 object-cover h-full w-full ${loading ? 'opacity-0 animate-pulse' : 'opacity-100'}`}
-        src={src}
+        src={`${baseUrlProxy}${src}`}
         alt={alt}
         width={width}
         height={height}
