@@ -290,11 +290,7 @@ const Navbar = ({ genresData, countriesData }: NavbarProps) => {
         </div>
         <div className='flex items-center gap-5'>
           <div className='relative flex items-center'>
-            <abbr
-              title='Tìm kiếm'
-              className={`hover:text-primary cursor-pointer ${openSearch ? 'hidden' : ''}`}
-              onClick={() => setOpenSearch(true)}
-            >
+            <abbr title='Tìm kiếm' className={`hover:text-primary cursor-pointer `} onClick={() => setOpenSearch(true)}>
               <svg
                 className='w-6 h-6 '
                 aria-hidden='true'

@@ -1,4 +1,5 @@
 import { useFetch } from './useFetch';
-import  useDebounce  from './useDebounce';
+import useDebounce from './useDebounce';
+import { useMetadata } from './useMetadata';
 
-export { useFetch, useDebounce };
+export { useFetch, useDebounce, useMetadata };

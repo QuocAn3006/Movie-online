@@ -6,6 +6,7 @@ import { ThemeModeScript } from 'flowbite-react';
 import { useFetch } from '@/hooks';
 import Navbar from '@/components/Navbar';
 import 'swiper/swiper-bundle.css';
+import { Footer } from '@/components/Footer';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
@@ -28,6 +29,7 @@ export default async function RootLayout({
       <body className={`bg-black/95 ${inter.className}`}>
         <Navbar genresData={genresData} countriesData={countriesData} />
         {children}
+        <Footer />
       </body>
     </html>
   );

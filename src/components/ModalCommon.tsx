@@ -3,10 +3,11 @@
 import { useDebounce, useFetch } from '@/hooks';
 import { Movie, Movies } from '@/types';
 import { Modal, Spinner } from 'flowbite-react';
-import Image from 'next/image';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, SyntheticEvent, useEffect, useState } from 'react';
 import { ImageContainer } from './Image';
-import { baseCdnImage } from '@/constants';
+import { baseCdnImage, baseUrlProxy } from '@/constants';
+import { useRouter } from 'next/router';
+import { useMFindMovieStore } from '@/stores/useFindMovies';
 
 type ModalProps = {
   isOpen: boolean;
@@ -18,6 +19,7 @@ const ModalCommon: FC<ModalProps> = ({ isOpen, onClose }) => {
   const [searchValue, setSearchValue] = useState<string>('');
   const debounceSearch = useDebounce(searchValue, 700);
   const [loading, setLoading] = useState<boolean>(false);
+  const { setSearchQuery, setMovies, searchQuery } = useMFindMovieStore();
   const handleSearch = async (value: string) => {
     try {
       setLoading(true);
@@ -30,6 +32,14 @@ const ModalCommon: FC<ModalProps> = ({ isOpen, onClose }) => {
     }
   };
 
+  const handleClickSeeMore = async (e: SyntheticEvent) => {
+    e.preventDefault();
+    setSearchQuery(debounceSearch);
+    setMovies(searchResult?.items || []);
+  };
+
+  console.log(searchQuery);
+
   useEffect(() => {
     if (debounceSearch) {
       handleSearch(debounceSearch);
@@ -39,7 +49,7 @@ const ModalCommon: FC<ModalProps> = ({ isOpen, onClose }) => {
   return (
     <Modal show={isOpen} onClose={() => onClose()}>
       <Modal.Header className='bg-[#020103] border-none' />
-      <div className='bg-[#020103] border-0 shadow-lg flex flex-col w-full text-white outline-none focus:outline-none'>
+      <div className='bg-[#020103] min-h-[90px] border-0 shadow-lg flex flex-col w-full text-white outline-none focus:outline-none'>
         <div className='relative px-4 flex-auto'>
           <input
             type='text'
@@ -94,7 +104,12 @@ const ModalCommon: FC<ModalProps> = ({ isOpen, onClose }) => {
                     </div>
                   </li>
                 ))}
-              <li className='flex justify-center items-center hover:text-primary cursor-pointer p-2'>Xem thêm</li>
+              <li
+                onClick={handleClickSeeMore}
+                className='flex justify-center items-center hover:text-primary cursor-pointer p-2'
+              >
+                Xem thêm
+              </li>
             </ul>
           </div>
         )}

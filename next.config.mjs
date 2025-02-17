@@ -1,7 +1,18 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        domains: ['wsrv.nl','img.ophim.live']
+      remotePatterns: [
+        {
+          protocol: 'https',
+          hostname: 'wsrv.nl',
+          pathname: '**'
+      },
+      {
+          protocol: 'https',
+          hostname: 'img.ophim.live',
+          pathname: '**'
+      }
+      ]
       },
 };
 
