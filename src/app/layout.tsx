@@ -6,7 +6,6 @@ import { ThemeModeScript } from 'flowbite-react';
 import { useFetch } from '@/hooks';
 import Navbar from '@/components/Navbar';
 import 'swiper/swiper-bundle.css';
-import icon from '@/app/icon.svg';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
@@ -24,7 +23,6 @@ export default async function RootLayout({
   return (
     <html lang='en' suppressHydrationWarning>
       <head>
-        <link rel='shortcut icon' href={icon} />
         <ThemeModeScript />
       </head>
       <body className={`bg-black/95 ${inter.className}`}>
