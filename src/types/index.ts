@@ -9,10 +9,23 @@ export type MovieType = {
   path: string;
 };
 
+type Pagination = {
+  currentPage: number;
+  pageRanges: number;
+  totalItems: number;
+  totalItemsPerPage: number;
+};
+
+type MovieParams = {
+  pagination: Pagination;
+};
+
 export type Movies = {
+  titlePage: string;
   seoOnPage: {
     og_image: string[];
   };
+  params: MovieParams;
   items: Movie[];
 };
 

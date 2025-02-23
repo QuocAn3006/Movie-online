@@ -5,9 +5,9 @@ import { Movie, Movies } from '@/types';
 import { Modal, Spinner } from 'flowbite-react';
 import React, { FC, SyntheticEvent, useEffect, useState } from 'react';
 import { ImageContainer } from './Image';
-import { baseCdnImage, baseUrlProxy } from '@/constants';
-import { useRouter } from 'next/router';
+import { baseCdnImage } from '@/constants';
 import { useMFindMovieStore } from '@/stores/useFindMovies';
+import { useRouter } from 'next/navigation';
 
 type ModalProps = {
   isOpen: boolean;
@@ -15,11 +15,12 @@ type ModalProps = {
 };
 
 const ModalCommon: FC<ModalProps> = ({ isOpen, onClose }) => {
-  const [searchResult, setSearchResult] = useState<Movies>();
+  const [searchResult, setSearchResult] = useState<Movies | undefined>(undefined);
   const [searchValue, setSearchValue] = useState<string>('');
   const debounceSearch = useDebounce(searchValue, 700);
   const [loading, setLoading] = useState<boolean>(false);
-  const { setSearchQuery, setMovies, searchQuery } = useMFindMovieStore();
+  const { setSearchQuery, setMovies } = useMFindMovieStore();
+  const router = useRouter();
   const handleSearch = async (value: string) => {
     try {
       setLoading(true);
@@ -35,10 +36,10 @@ const ModalCommon: FC<ModalProps> = ({ isOpen, onClose }) => {
   const handleClickSeeMore = async (e: SyntheticEvent) => {
     e.preventDefault();
     setSearchQuery(debounceSearch);
-    setMovies(searchResult?.items || []);
+    searchResult && setMovies(searchResult);
+    onClose();
+    router.push(`/tim-kiem?keyword=${debounceSearch}`);
   };
-
-  console.log(searchQuery);
 
   useEffect(() => {
     if (debounceSearch) {

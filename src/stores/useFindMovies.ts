@@ -1,19 +1,28 @@
 'use client';
-import { Movie } from '@/types';
+import { Movies } from '@/types';
 import { create } from 'zustand';
+import { createJSONStorage, persist } from 'zustand/middleware';
 
 interface MovieSearchState {
   searchQuery: string;
-  movies: Movie[];
+  movies: Movies | undefined;
   setSearchQuery: (query: string) => void;
-  setMovies: (movies: Movie[]) => void;
+  setMovies: (movies: Movies) => void;
   clearMovies: () => void;
 }
 
-export const useMFindMovieStore = create<MovieSearchState>((set) => ({
-  searchQuery: '',
-  movies: [],
-  setSearchQuery: (query) => set({ searchQuery: query }),
-  setMovies: (movies) => set({ movies }),
-  clearMovies: () => set({ movies: [] }),
-}));
+export const useMFindMovieStore = create<MovieSearchState>()(
+  persist(
+    (set) => ({
+      searchQuery: '',
+      movies: undefined,
+      setSearchQuery: (query) => set({ searchQuery: query }),
+      setMovies: (movies) => set({ movies }),
+      clearMovies: () => set({ movies: undefined }),
+    }),
+    {
+      name: 'search-movies',
+      storage: createJSONStorage(() => localStorage),
+    }
+  )
+);

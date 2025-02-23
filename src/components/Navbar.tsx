@@ -1,10 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 'use client';
 import { movieTypes } from '@/constants';
-import { useDebounce, useFetch } from '@/hooks';
 import { Category, Movie, Movies } from '@/types';
-import axios from 'axios';
-import { Spinner } from 'flowbite-react';
 import Link from 'next/link';
 import React, { useEffect, useRef, useState } from 'react';
 import ModalCommon from './ModalCommon';
@@ -216,7 +213,7 @@ const MobileMenu = ({ genres, countries }: { genres: Category[]; countries: Cate
 const Navbar = ({ genresData, countriesData }: NavbarProps) => {
   const [displayBgColor, setDisplayBgColor] = useState<boolean>(false);
   const [openSearch, setOpenSearch] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false);
+
   useEffect(() => {
     function checkPositionHandler() {
       if (window.scrollY == 0) setDisplayBgColor(false);
