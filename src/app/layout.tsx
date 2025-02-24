@@ -7,6 +7,7 @@ import { useFetch } from '@/hooks';
 import Navbar from '@/components/Navbar';
 import 'swiper/swiper-bundle.css';
 import { Footer } from '@/components/Footer';
+import NextTopLoader from 'nextjs-toploader';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
@@ -27,6 +28,14 @@ export default async function RootLayout({
         <ThemeModeScript />
       </head>
       <body className={`bg-black/95 ${inter.className}`}>
+        <NextTopLoader
+          color='#e4d804'
+          height={3}
+          showSpinner={false}
+          template="<div class='bar' role='bar'>
+          <div class='peg'></div>
+        </div>"
+        />
         <Navbar genresData={genresData} countriesData={countriesData} />
         {children}
         <Footer />

@@ -12,22 +12,22 @@ export const useMetadata = (params: Params) => {
   const { title, description, urlPath, image = '/icon.svg' } = params;
 
   return {
-    title: `${title} | Thunmov`,
+    title: `${title} | MovOnl`,
     description,
     alternates: {
       canonical: baseUrl + urlPath,
     },
     openGraph: {
-      title: `${title} | Thunmov`,
+      title: `${title} | MovOnl`,
       description,
       url: baseUrl + urlPath,
       type: 'website',
-      siteName: 'Thunmov',
+      siteName: 'MovOnl',
       locale: 'vi-VN',
       images: image,
     },
     twitter: {
-      title: `${title} | Thunmov`,
+      title: `${title} | MovOnl`,
       description,
       card: 'summary',
       images: image,
