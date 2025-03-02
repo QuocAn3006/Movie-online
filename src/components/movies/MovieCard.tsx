@@ -20,6 +20,7 @@ const MovieCard: FC<MovieCardProps> = ({ item, srcImage }) => {
       ? removeFavoriteMovie(item?.slug)
       : addFavoriteMovie({ name: item?.name, slug: item?.slug, thumb_url: item?.thumb_url });
   };
+
   return (
     <div className='select-none group'>
       <div className='relative rounded-lg overflow-hidden'>

@@ -1,11 +1,11 @@
+/* eslint-disable @next/next/inline-script-id */
 /* eslint-disable react-hooks/rules-of-hooks */
 import MovieCategory from '@/components/movies/MovieCategory';
 import MovieDetails from '@/components/movies/MovieDetails';
 import { useFetch, useMetadata } from '@/hooks';
-import { Category } from '@/types';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-// import Script from 'next/script';
+import Script from 'next/script';
 
 export const revalidate = 3600;
 
@@ -18,25 +18,22 @@ export default async function Movie(context: MovieContext) {
     params: { id },
   } = context;
 
-  const [{ data }, recentUpdateMovies] = await Promise.all([
-    useFetch(`/phim/${id}`),
-    useFetch('/danh-sach/phim-moi').then(({ data }) => data.items.filter((item: Category) => item.slug !== id)),
-  ]);
+  const [{ data }, recentUpdateMovies] = await Promise.all([useFetch(`/phim/${id}`), useFetch('/danh-sach/phim-moi')]);
   if (!data.item) return notFound();
 
   return (
     <>
       <MovieDetails movie={data?.item} />
       <div id='disqus_thread' className='max-w-5xl mx-auto my-16 px-5'></div>
-      {/* <Script>
+      <Script>
         {`(function() {
           var d = document, s = d.createElement('script');
-          s.src = 'https://thunmov-vercel-app.disqus.com/embed.js';
+          s.src = 'https://movieonline-ten.vercel.app.disqus.com/embed.js';
           s.setAttribute('data-timestamp', +new Date());
           (d.head || d.body).appendChild(s);
         })();`}
-      </Script> */}
-      <MovieCategory movies={recentUpdateMovies} title='Mới cập nhật' slidesPerView={5} />
+      </Script>
+      <MovieCategory movies={recentUpdateMovies?.data} title='Mới cập nhật' slidesPerView={5} />
     </>
   );
 }

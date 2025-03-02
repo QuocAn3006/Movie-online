@@ -16,6 +16,7 @@ const MovieCategory: FC<MovieCategoryProps> = (props) => {
   const { movies, pathAll, slidesPerView = 4, title } = props;
   const swiperRef = useRef<SwiperCore>();
   const srcImage = movies?.seoOnPage?.og_image || [];
+
   return (
     <div className='max-w-7xl mx-auto px-5'>
       <div className='flex items-center justify-between mb-6 mt-12'>

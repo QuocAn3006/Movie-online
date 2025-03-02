@@ -11,7 +11,7 @@ import NextTopLoader from 'nextjs-toploader';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'ThunMov - Xem phim online miễn phí không quảng cáo',
+  title: 'MovOnl - Xem phim online miễn phí không quảng cáo',
   description:
     'Website cung cấp phim miễn phí nhanh chất lượng cao. Phim online VietSub, Thuyết minh, lồng tiếng chất lượng Full HD. Nguồn phim vietsub chất lượng cao cập nhật nhanh nhất.',
 };
