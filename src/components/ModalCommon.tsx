@@ -49,8 +49,6 @@ const ModalCommon: FC<ModalProps> = ({ isOpen, onClose, modalType, videoTrailerI
     }
   }, [debounceSearch]);
 
-  console.log(videoTrailerId);
-
   return (
     <Modal show={isOpen} onClose={() => onClose()}>
       {modalType === 'trailer' && videoTrailerId ? (
@@ -84,7 +82,16 @@ const ModalCommon: FC<ModalProps> = ({ isOpen, onClose, modalType, videoTrailerI
                     .slice(0, 5)
                     .sort((a, b) => new Date(b.year).getTime() - new Date(a.year).getTime())
                     .map((item: Movie) => (
-                      <li key={item._id} className='p-3 hover:bg-gray-800 cursor-pointer'>
+                      <li
+                        key={item._id}
+                        className='p-3 hover:bg-gray-800 cursor-pointer'
+                        onClick={() => {
+                          onClose();
+                          item?.slug?.includes('movies')
+                            ? router.push(`${item?.slug}`)
+                            : router.push(`/movies/${item?.slug}`);
+                        }}
+                      >
                         <div className='flex items-center justify-between'>
                           <div className='flex gap-3 items-center'>
                             <div className='relative min-w-[50px] min-h-[50px]'>
