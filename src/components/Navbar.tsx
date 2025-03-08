@@ -214,6 +214,8 @@ const Navbar = ({ genresData, countriesData }: NavbarProps) => {
   const [displayBgColor, setDisplayBgColor] = useState<boolean>(false);
   const [openSearch, setOpenSearch] = useState<boolean>(false);
 
+  const newGenresData = genresData?.items?.filter((item) => item.slug !== 'phim-18');
+
   useEffect(() => {
     function checkPositionHandler() {
       if (window.scrollY == 0) setDisplayBgColor(false);
@@ -261,7 +263,7 @@ const Navbar = ({ genresData, countriesData }: NavbarProps) => {
           <span className='relative group hover:text-primary cursor-pointer'>
             Thể loại
             <ul className='dropdown-menu'>
-              {genresData?.items?.map((g: Category) => (
+              {newGenresData?.map((g: Category) => (
                 <Link key={g.slug} href={`/genres/${g.slug}`} className='hover:text-primary duration-100'>
                   {g.name}
                 </Link>
@@ -321,7 +323,7 @@ const Navbar = ({ genresData, countriesData }: NavbarProps) => {
               </svg>
             </abbr>
           </Link>
-          <MobileMenu genres={genresData?.items || []} countries={countriesData?.items || []} />
+          <MobileMenu genres={newGenresData || []} countries={countriesData?.items || []} />
           <ModalCommon isOpen={openSearch} onClose={() => setOpenSearch(false)} />
         </div>
       </nav>

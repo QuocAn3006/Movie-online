@@ -25,14 +25,6 @@ export default async function Movie(context: MovieContext) {
     <>
       <MovieDetails movie={data?.item} />
       <div id='disqus_thread' className='max-w-5xl mx-auto my-16 px-5'></div>
-      <Script>
-        {`(function() {
-          var d = document, s = d.createElement('script');
-          s.src = 'https://movieonline-ten.vercel.app.disqus.com/embed.js';
-          s.setAttribute('data-timestamp', +new Date());
-          (d.head || d.body).appendChild(s);
-        })();`}
-      </Script>
       <MovieCategory movies={recentUpdateMovies?.data} title='Mới cập nhật' slidesPerView={5} />
     </>
   );

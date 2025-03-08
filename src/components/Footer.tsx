@@ -35,7 +35,7 @@ export const Footer = () => {
           </ul>
           <ul className='flex items-center gap-x-2.5 text-xs font-semibold'>
             <Link
-              href='https://github.com/pth-1641'
+              href='https://github.com/QuocAn3006'
               target='_blank'
               rel='noopener noreferrer'
               className='rounded-full bg-black aspect-square p-2.5  duration-150'
@@ -57,7 +57,7 @@ export const Footer = () => {
               </svg>
             </Link>
             <Link
-              href='https://fb.com/pth.1641'
+              href='https://www.facebook.com/profile.php?id=100027620832757'
               target='_blank'
               rel='noopener noreferrer'
               className='rounded-full bg-black aspect-square p-2.5  duration-150'
@@ -79,7 +79,7 @@ export const Footer = () => {
               </svg>
             </Link>
             <Link
-              href='https://www.instagram.com/pth_1641'
+              href='https://www.instagram.com/tranan498/'
               target='  '
               rel='noopener noreferrer'
               className='rounded-full bg-black aspect-square p-2.5  duration-150'

@@ -72,6 +72,7 @@ const ModalCommon: FC<ModalProps> = ({ isOpen, onClose, modalType, videoTrailerI
                 placeholder='Phim, diễn viên, thể loại...'
                 value={searchValue}
                 onChange={(e) => setSearchValue(e.target.value)}
+                autoFocus
               />
               {loading && <Spinner aria-label='Default status example' className='absolute top-4 right-7 w-4 h-4' />}
             </div>
