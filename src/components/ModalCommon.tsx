@@ -3,7 +3,7 @@
 import { useDebounce, useFetch } from '@/hooks';
 import { Movie, Movies } from '@/types';
 import { Modal, Spinner } from 'flowbite-react';
-import React, { FC, SyntheticEvent, useEffect, useState } from 'react';
+import React, { FC, SyntheticEvent, useEffect, useState, useTransition } from 'react';
 import { ImageContainer } from './Image';
 import { baseCdnImage } from '@/constants';
 import { useMFindMovieStore } from '@/stores/useFindMovies';
@@ -20,27 +20,28 @@ const ModalCommon: FC<ModalProps> = ({ isOpen, onClose, modalType, videoTrailerI
   const [searchResult, setSearchResult] = useState<Movies | undefined>(undefined);
   const [searchValue, setSearchValue] = useState<string>('');
   const debounceSearch = useDebounce(searchValue, 700);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, startTransition] = useTransition();
   const { setSearchQuery, setMovies } = useMFindMovieStore();
   const router = useRouter();
   const handleSearch = async (value: string) => {
-    try {
-      setLoading(true);
-      const data = await useFetch(`/tim-kiem?keyword=${value}`);
-      setSearchResult(data?.data);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
+    startTransition(async () => {
+      try {
+        const data = await useFetch(`/tim-kiem?keyword=${value}`);
+        setSearchResult(data?.data);
+      } catch (error) {
+        console.error(error);
+      }
+    });
   };
 
   const handleClickSeeMore = async (e: SyntheticEvent) => {
     e.preventDefault();
-    setSearchQuery(debounceSearch);
-    searchResult && setMovies(searchResult);
-    onClose();
-    router.push(`/tim-kiem?keyword=${debounceSearch}`);
+    startTransition(() => {
+      setSearchQuery(debounceSearch);
+      searchResult && setMovies(searchResult);
+      onClose();
+      router.push(`/tim-kiem?keyword=${debounceSearch}`);
+    });
   };
 
   useEffect(() => {

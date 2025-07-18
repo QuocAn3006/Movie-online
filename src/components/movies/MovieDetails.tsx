@@ -39,7 +39,7 @@ const MovieDetails = ({ movie }: { movie: MovieDetail }) => {
   return (
     <>
       <div
-        style={{ backgroundImage: `url(${baseUrlProxy + baseCdnImage + '/uploads/movies/' + movie.poster_url})` }}
+        style={{ backgroundImage: `url(${baseCdnImage + '/uploads/movies/' + movie.poster_url})` }}
         className='bg-cover w-full aspect-video relative bg-center lg:max-h-[800px]'
       >
         <div className='inset-0 bg-black/90 px-4 pb-10 pt-24 flex items-center lg:absolute'>

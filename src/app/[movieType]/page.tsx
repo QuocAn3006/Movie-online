@@ -12,7 +12,6 @@ const MovieType = () => {
   const { movies } = useMFindMovieStore();
   const pathName = usePathname();
   const [movieData, setMovieData] = useState<Movies | undefined>();
-  console.log(movieData);
 
   useEffect(() => {
     const fetchMovies = async () => {

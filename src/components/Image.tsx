@@ -17,7 +17,7 @@ export const ImageContainer: FC<ImageProps> = (props) => {
     <div className={`bg-stone-900 overflow-hidden ${className}`}>
       <Image
         className={`duration-300 object-cover h-full w-full `}
-        src={`${baseUrlProxy}${src}`}
+        src={`${src}`}
         alt={alt}
         width={width}
         height={height}
