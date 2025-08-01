@@ -36,10 +36,10 @@ const MovieDetails = ({ movie }: { movie: MovieDetail }) => {
     }
   }, [movie]);
 
-  useEffect(() => {
-    if (!iframeRef.current) return;
-    iframeRef.current.src += '';
-  }, [serverType]);
+  // useEffect(() => {
+  //   if (!iframeRef.current) return;
+  //   iframeRef.current.src += '';
+  // }, [serverType]);
   return (
     <>
       <div
