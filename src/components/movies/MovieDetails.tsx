@@ -6,7 +6,11 @@ import { ImageContainer } from '../Image';
 import Link from 'next/link';
 import { useFavouriteMovies } from '@/stores/useFavouriteMovies';
 import ShareButton from './button/ShareButton';
-import ModalCommon from '../ModalCommon';
+import dynamic from 'next/dynamic';
+
+const ModalCommon = dynamic(() => import('../ModalCommon'), {
+  ssr: false,
+});
 
 type ServerType = 'art-player' | 'anym' | 'hlsplayer';
 

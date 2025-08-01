@@ -4,7 +4,11 @@ import { movieTypes } from '@/constants';
 import { Category, Movie, Movies } from '@/types';
 import Link from 'next/link';
 import React, { useEffect, useRef, useState } from 'react';
-import ModalCommon from './ModalCommon';
+import dynamic from 'next/dynamic';
+
+const ModalCommon = dynamic(() => import('./ModalCommon'), {
+  ssr: false,
+});
 
 interface NavbarProps {
   genresData: { items: Category[] };
