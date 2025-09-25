@@ -1,28 +1,28 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { MoviePagination } from '@/components/movies/MoviePagination';
-import { Pagination } from '@/components/Pagination';
-import { useFetch } from '@/hooks';
-import { useMetadata } from '@/hooks/';
-import { notFound } from 'next/navigation';
+import { MoviePagination } from "@/components/movies/MoviePagination";
+import { Pagination } from "@/components/Pagination";
+import { useFetch } from "@/hooks";
+import { useMetadata } from "@/hooks/";
+import { notFound } from "next/navigation";
 
 type MoviesCountryContext = {
-  params: { type: string };
-  searchParams: {
+  params: Promise<{ type: string }>;
+  searchParams: Promise<{
     page: string;
-  };
+  }>;
 };
 
 export default async function MoviesCountry(context: MoviesCountryContext) {
-  const {
-    params: { type },
-    searchParams: { page = 1 },
-  } = context;
+  const params = await context.params;
+  const searchParams = await context.searchParams;
+  const { type } = params;
+  const { page = 1 } = searchParams;
 
   const { data } = await useFetch(`/quoc-gia/${type}?page=${page}`);
   if (!data) return notFound();
 
   return (
-    <main className='mx-auto max-w-7xl px-5'>
+    <main className="mx-auto max-w-7xl px-5">
       <MoviePagination movies={data.items} title={data.titlePage} />
       <Pagination {...data.params.pagination} />
     </main>
@@ -30,16 +30,16 @@ export default async function MoviesCountry(context: MoviesCountryContext) {
 }
 
 export async function generateMetadata(context: MoviesCountryContext) {
-  const {
-    params: { type },
-    searchParams: { page },
-  } = context;
+  const params = await context.params;
+  const searchParams = await context.searchParams;
+  const { type } = params;
+  const { page } = searchParams;
 
   const { data } = await useFetch(`/quoc-gia/${type}?page=${page}`);
   if (!data) {
     return useMetadata({
-      title: 'Not Found',
-      description: 'The page is not found.',
+      title: "Not Found",
+      description: "The page is not found.",
       urlPath: `/countries/${type}`,
     });
   }
