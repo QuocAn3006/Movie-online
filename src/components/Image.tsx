@@ -2,7 +2,6 @@
 'use client';
 import { FC, useState } from 'react';
 import Image from 'next/image';
-import { baseUrlProxy } from '@/constants';
 type ImageProps = {
   src: string;
   alt?: string;
@@ -21,7 +20,7 @@ export const ImageContainer: FC<ImageProps> = (props) => {
         alt={alt}
         width={width}
         height={height}
-        loading='lazy'
+        loading="lazy"
         draggable={false}
       />
     </div>
